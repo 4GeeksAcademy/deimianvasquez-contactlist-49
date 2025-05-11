@@ -12,7 +12,9 @@ export const initialStore=()=>{
         title: "Do my homework",
         background: null,
       }
-    ]
+    ],
+    urlBase:"https://playground.4geeks.com/contact/agendas",
+    contacts: [],
   }
 }
 

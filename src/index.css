@@ -1,0 +1,16 @@
+.image-thumbnail {
+  min-width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.text-contact {
+
+    padding: 0 15px;
+    font-size: 16px;
+  color: #333;
+}
+.text-contact > p {
+  margin: 0;
+}
+
