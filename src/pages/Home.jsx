@@ -1,6 +1,7 @@
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { deleteContact } from "../services/contactApi.js";
 import { Link } from "react-router-dom";
+import { sum } from "../utils/calculator.js";
 
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 
@@ -13,7 +14,8 @@ export const Home = () => {
 
 	const fetchDeleteContact = async (id) => {
 		try {
-			const response = await deleteContact("deimian", id)
+			const response = await deleteContact("deimian", id) // --> aqui pido eliminar
+
 			if (response) {
 				dispatch({ type: "SET_CONTACTS", payload: contacts.filter((item) => item.id !== id) })
 			}
@@ -31,6 +33,9 @@ export const Home = () => {
 						to={"/create-contact"}
 						className="btn btn-success"
 					>Add new Contact</Link>
+					{
+						sum(10,10)
+					}
 				</div>
 
 				<div className="col-12 col-lg-8  text-center">
@@ -41,7 +46,7 @@ export const Home = () => {
 								const { name, phone, email, address } = item;
 								return (
 									<div
-										key={item.id}
+										key={item.id}Email
 										className="d-flex justify-content-between border"
 									>
 										<div className="d-flex align-items-center py-3">
@@ -68,7 +73,7 @@ export const Home = () => {
 											</Link>
 											{/* 
 										<button
-											className="btn"
+											className=Email"btn"
 											onClick={() => deleteContact(item.id)}
 										>
 											<i className="fas fa-trash-alt"></i>

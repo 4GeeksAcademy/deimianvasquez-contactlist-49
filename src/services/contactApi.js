@@ -6,10 +6,10 @@ export const getAllContacts = async (username) => {
         if (response.ok) {
             const data = await response.json();
             return data.contacts;
-        }else if(response.status === 404){
+        } else if (response.status === 404) {
             createAgenda(username)
-        } 
-        
+        }
+
         else {
             throw new Error("Failed to fetch agendas");
         }
@@ -21,7 +21,7 @@ export const getAllContacts = async (username) => {
 
 export const createAgenda = async (username) => {
     try {
-        const response  = await fetch(`${BASE_URL}/${username}`, {
+        const response = await fetch(`${BASE_URL}/${username}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

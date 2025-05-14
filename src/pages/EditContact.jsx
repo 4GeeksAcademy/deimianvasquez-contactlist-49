@@ -11,7 +11,7 @@ const initialStateContact = {
     address: ""
 }
 
-const urlBase = "https://playground.4geeks.com/contact/agendas";
+
 
 
 export const EditContact = () => {
