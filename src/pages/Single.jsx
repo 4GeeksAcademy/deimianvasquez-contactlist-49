@@ -8,6 +8,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";  // Import a custom ho
 export const Single = props => {
   // Access the global state using the custom hook.
   const { store } = useGlobalReducer()
+  
 
   // Retrieve the 'theId' URL parameter using useParams hook.
   const { theId } = useParams()

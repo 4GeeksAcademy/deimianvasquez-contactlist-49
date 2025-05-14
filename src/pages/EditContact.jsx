@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer";
+
+import { updateContact } from "../services/contactApi";
 
 const initialStateContact = {
     name: "",
@@ -13,7 +16,11 @@ const urlBase = "https://playground.4geeks.com/contact/agendas";
 
 export const EditContact = () => {
     const [contact, setContact] = useState(initialStateContact)
-    const [contacts, setContacts] = useState([])
+
+    const { theId } = useParams()
+
+    const { store, dispatch } = useGlobalReducer()
+    const {contacts} = store
 
     const handleChange = ({ target }) => {
         setContact({
@@ -22,7 +29,6 @@ export const EditContact = () => {
         })
     }
 
-    const { theId } = useParams()
 
     const getOneContact = async () => {
         try {
@@ -31,7 +37,7 @@ export const EditContact = () => {
                 console.log(result)
                 setContact(result)
             }
-        } catch (error) {   
+        } catch (error) {
             console.log(error);
         }
     }
@@ -39,15 +45,12 @@ export const EditContact = () => {
     const handleSubmit = async (event) => {
         event.preventDefault()
         try {
-            const response = await fetch(`${urlBase}/deimian/contacts/${theId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(contact)
-            })
-            if (response.ok) {
-                const data = await response.json()
+            const data = await updateContact("deimian", theId, contact)
+            
+            if (data) {
+                console.log(data)
+                setContact(initialStateContact)
+                dispatch({ type: "UPDATE_CONTACT", payload: data })
             }
         } catch (error) {
             console.log(error);
@@ -55,29 +58,12 @@ export const EditContact = () => {
     }
 
 
-        const getAllContacts = async () => {
-            try {
-                const response = await fetch(`${urlBase}/deimian/contacts`);
-                if (response.ok) {
-                    const data = await response.json();
-                    // dispatch({ type: "SET_CONTACTS", payload: data });
-                    setContacts(data.contacts);
-                }
-                if (response.status === 404) {
-                    createContact();
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    
-        useEffect(() => {
-            getAllContacts();
-        }, [])
 
-        useEffect(() => {
-            getOneContact();
-        }
+
+
+    useEffect(() => {
+        getOneContact();
+    }
         , [contacts])
 
     return (

@@ -1,6 +1,8 @@
 import { useState } from "react"
-import { Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { Link } from "react-router-dom";
+import { createContact } from "../services/contactApi";
+
 
 const initialStateContact = {
     name: "",
@@ -24,24 +26,33 @@ export const CreateContact = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-
         try {
-            const response = await fetch(`${urlBase}/deimian/contacts`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(contact)
-            })
-            if (response.ok) {
-                const data = await response.json()
+            const data =  await createContact("deimian", contact)
+            if (data) {
                 console.log(data)
-                // setContact(initialStateContact)
-                // dispatch({ type: "ADD_CONTACT", payload: data })
-            } 
+                setContact(initialStateContact)
+                dispatch({ type: "ADD_CONTACT", payload: data })
+            }
         } catch (error) {
             console.log(error);
         }
+        // try {
+        //     const response = await fetch(`${urlBase}/deimian/contacts`, {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //         body: JSON.stringify(contact)
+        //     })
+        //     if (response.ok) {
+        //         const data = await response.json()
+        //         console.log(data)
+        //         // setContact(initialStateContact)
+        //         // dispatch({ type: "ADD_CONTACT", payload: data })
+        //     } 
+        // } catch (error) {
+        //     console.log(error);
+        // }
 
     }
     return (

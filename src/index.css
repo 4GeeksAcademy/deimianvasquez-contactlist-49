@@ -14,3 +14,9 @@
   margin: 0;
 }
 
+.modal.fade {
+  transition: opacity 0.3s ease-in-out;
+}
+.modal-backdrop.fade {
+  transition: opacity 0.3s ease-in-out;
+}
